@@ -123,4 +123,5 @@ Một đầu đèn = một track. Lỡ vẽ track thứ hai cho cùng đèn: xo�
 | `Chưa cài reference …` | Chưa chạy `make reference` cho task này | `make reference TASK=<task>` (task phải khoá trước) |
 | `! Core … không có trong export` | Thiếu ảnh core trong task | Kiểm bước 4 mục 2 (đã chọn đủ ảnh trong `core/` chưa), tạo lại task nếu thiếu |
 
-Kẹt quá 3 phút ở một thao tác: hỏi bạn cùng nhóm hoặc người ngồi cạnh, đừng tự tìm cách lách qua bước khoá.
+Kẹt quá 3 phút ở một thao tác: gọi Lab Coach (hoặc hỏi bạn cùng nhóm), đừng tự tìm cách lách qua bước khoá. Xem
+thêm mục [Khi bị kẹt](README.md#khi-bị-kẹt) trong `README.md`.

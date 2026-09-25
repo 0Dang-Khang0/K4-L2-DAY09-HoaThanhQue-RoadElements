@@ -4,8 +4,9 @@ Bạn gắn nhãn 4 loại phần tử đường (lane marking, drivable area, t
 chiếu bài của mình với reference có sẵn trong repo. Mục tiêu của buổi không phải vẽ nhiều, mà là **làm đúng rule, thấy
 được chỗ mình khác reference, và quyết định ai đúng bằng bằng chứng**.
 
-Lab tự phục vụ: không có ai đứng lớp theo dõi thao tác của bạn. Mọi hướng dẫn nằm trong file này, `GUIDE.md` và 4
-card; mọi thứ bạn nộp nằm trong `submission/`.
+Lab Coach có mặt trong lớp suốt buổi để theo dõi tiến độ và hỗ trợ khi bạn kẹt. Nhưng luồng bài không chờ ai: bạn
+tự khoá, tự mở reference, tự so sánh, tự ghi log. Mọi hướng dẫn nằm trong file này, `GUIDE.md` và 4 card; mọi thứ bạn
+nộp nằm trong `submission/`. Khi nào gọi Lab Coach: xem mục [Khi bị kẹt](#khi-bị-kẹt).
 
 ## Làm một mình hay theo nhóm
 
@@ -81,7 +82,7 @@ thêm gì.
 
 ## Honour rule: đừng mở trước khi khoá
 
-Reference của cả 4 task đã nằm sẵn trong repo (`refs/<task>.zip`) ngay từ đầu — không có ai phát GT giữa buổi.
+Reference của cả 4 task đã nằm sẵn trong repo (`refs/<task>.zip`) ngay từ đầu — không phải chờ ai phát GT giữa buổi.
 Không có mã hoá nào ngăn bạn mở file này sớm; đây là luật danh dự:
 
 - `make reference` **từ chối chạy** nếu task chưa khoá, và từ chối nếu file `annotations.xml` đã khoá bị sửa sau
@@ -110,9 +111,18 @@ Không tự mở `refs/` hay `gt/` bằng tay trước khi khoá, và không m�
 
 ## Tự time-box
 
-Chậm hơn lịch 5 phút ở một task: bỏ phần stretch, khoá bài đang có, làm tiếp task sau. Kẹt thao tác CVAT quá 3
-phút: xem [GUIDE mục 5](GUIDE.md) (xử lý lỗi thường gặp), rồi hỏi bạn cùng nhóm hoặc người ngồi cạnh. Đừng tự tìm
-cách lách qua bước khoá.
+Chậm hơn lịch 5 phút ở một task: bỏ phần stretch, khoá bài đang có, làm tiếp task sau. Lab Coach đi vòng theo mốc
+của lịch; được nhắc là đang chậm thì làm đúng như vậy.
+
+## Khi bị kẹt
+
+1. Tra [GUIDE mục 5](GUIDE.md): bảng thông báo lỗi và cách xử lý.
+2. Vẫn kẹt sau 3 phút: giơ tay gọi Lab Coach (hoặc hỏi bạn cùng nhóm nếu nhanh hơn). Lab Coach gỡ kẹt về CVAT,
+   Docker, lệnh `make`/Python và git.
+3. Câu hỏi kiểu "vẽ thế này đúng chưa": Lab Coach chỉ bạn tới đoạn rule trong card hoặc handbook, nhưng **không xem
+   hộ bài trước khi bạn khoá** — lần thử đầu phải là của bạn. Ca mơ hồ thật thì ghi vào `decision_log.csv`.
+
+Đừng tự tìm cách lách qua bước khoá.
 
 ## Hai log
 
