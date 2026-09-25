@@ -7,6 +7,7 @@
     "traffic_sign",
     "traffic_light"
   ],
+  "identical_vertex_px": 0.5,
   "tasks": {
     "lane": {
       "example": "bb890202",

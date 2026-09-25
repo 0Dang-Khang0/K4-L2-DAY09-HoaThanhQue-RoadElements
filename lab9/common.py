@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
+import csv
 import hashlib
 import json
 from pathlib import Path
-from typing import Any, Dict, Tuple
+from typing import Any, Dict, List, Tuple
 
 from . import LabError, TASKS
 
@@ -17,6 +18,23 @@ def read_json(path: Path) -> Dict[str, Any]:
             return json.load(stream)
     except (OSError, ValueError) as error:
         raise LabError(f"Không đọc được {path}: {error}") from error
+
+
+def nonempty_csv_rows(path: Path) -> Tuple[List[str], List[Dict[str, str]]]:
+    """Đọc CSV và bỏ các dòng hoàn toàn rỗng theo cùng một quy tắc."""
+    with path.open(encoding="utf-8-sig", newline="") as stream:
+        reader = csv.DictReader(stream)
+        header = reader.fieldnames or []
+        rows = []
+        for row in reader:
+            normalized = {
+                str(key): (";".join(value) if isinstance(value, list) else (value or "")).strip()
+                for key, value in row.items()
+                if key is not None
+            }
+            if any(normalized.values()):
+                rows.append(normalized)
+        return header, rows
 
 
 def load_lab(base: Path) -> Dict[str, Any]:

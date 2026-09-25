@@ -20,6 +20,7 @@ from .geometry import (
     polyline_distance,
     union_masks,
 )
+from .provenance import display_tolerance, identical_shapes
 
 
 @dataclass
@@ -563,7 +564,12 @@ def _candidate_csv(report: Comparison, config: Dict[str, object]) -> str:
     return stream.getvalue().rstrip("\n")
 
 
-def markdown_report(report: Comparison, config: Dict[str, object], reference_note: str) -> str:
+def markdown_report(
+    report: Comparison,
+    config: Dict[str, object],
+    reference_note: str,
+    identical: Optional[Tuple[int, int, float]] = None,
+) -> str:
     """Dựng report Markdown không có điểm hay kết luận đạt/trượt."""
     lines = [
         f"# So sánh {report.task}",
@@ -573,6 +579,14 @@ def markdown_report(report: Comparison, config: Dict[str, object], reference_not
         reference_note,
         "",
     ]
+    if identical is not None:
+        count, total, tolerance = identical
+        lines.extend(
+            [
+                f"Trùng từng đỉnh với reference: {count}/{total} shape (<= {display_tolerance(tolerance)} px).",
+                "",
+            ]
+        )
     lines.extend(report.warnings)
     if report.warnings:
         lines.append("")
@@ -731,14 +745,21 @@ def run_compare(base: Path, task: str) -> List[str]:
     note = str(meta.get("note", "")) or str(config.get("reference_notes", {}).get(task, {}).get(kind, ""))
     if task == "lane" and kind == "context_only":
         report = compare_documents(task, config, manifest_task, reference, learner, kind)
+    tolerance = float(config.get("identical_vertex_px", 0.5))
+    identical, total = identical_shapes(learner, reference, tolerance)
     submission.mkdir(parents=True, exist_ok=True)
     md_path = submission / "compare.md"
     html_path = submission / "compare.html"
-    md_path.write_text(markdown_report(report, config, note), encoding="utf-8")
+    md_path.write_text(markdown_report(report, config, note, (identical, total, tolerance)), encoding="utf-8")
     write_html_comparison(html_path, report, manifest_task, reference, learner)
     lines = [f"✓ Đã so {task}: {len(report.differences)} khác biệt gợi ý."]
     if report.warnings:
         lines.append(f"! {len(report.warnings)} mẫu core không có trong export.")
+    if identical:
+        lines.append(
+            f"! {identical}/{total} shape trùng từng đỉnh (<= {display_tolerance(tolerance)} px) với reference — "
+            "nếu bạn đã import reference vào CVAT, ghi rõ trong decision_log.csv."
+        )
     lines += [
         f"✓ Report: {md_path.relative_to(base)} và {html_path.relative_to(base)}",
         "! Hãy tự quyết định ai đúng và ghi vào comparison_log.csv.",

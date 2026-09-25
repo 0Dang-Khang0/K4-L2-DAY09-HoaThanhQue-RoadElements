@@ -8,10 +8,12 @@ import sys
 from typing import List, Optional
 
 from . import LabError
+from .common import load_lab
 from .compare import run_compare
 from .cvat_status import check_cvat
 from .locking import lock_export
 from .peer import run_peer
+from .progress import status_lines
 from .reference import install_reference
 from .submission import check_submission
 from .team import configure_team
@@ -39,6 +41,7 @@ def parser() -> argparse.ArgumentParser:
     compare.add_argument("task")
     commands.add_parser("cvat", help="Kiểm CVAT đã cài ở Day 2/Day 8 đang chạy")
     commands.add_parser("check", help="Kiểm tra submission đủ file")
+    commands.add_parser("status", help="Xem tiến độ và đúng một bước tiếp theo")
     return root
 
 
@@ -65,6 +68,9 @@ def main(argv: Optional[List[str]] = None, base: Optional[Path] = None) -> int:
             code = 0
         elif args.command == "cvat":
             lines = check_cvat()
+            code = 0
+        elif args.command == "status":
+            lines = status_lines(lab_root, load_lab(lab_root))
             code = 0
         else:
             lines, gaps = check_submission(lab_root)

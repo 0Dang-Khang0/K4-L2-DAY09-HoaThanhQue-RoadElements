@@ -118,10 +118,14 @@ Một đầu đèn = một track. Lỡ vẽ track thứ hai cho cùng đèn: xo�
 | `traffic_light phải export bằng CVAT for video 1.1` | Chọn nhầm định dạng **CVAT for images** | Export lại đúng định dạng (mục 4 bước 3) rồi khoá. Chưa khoá nên không tính khoá lại |
 | `! … track đèn chỉ có 1 frame` | Thường là đèn vẽ bằng **Shape** (track thật chỉ hiện 1 frame cũng bị báo) | Mở task kiểm tra; nếu đúng là Shape thì vẽ lại bằng **Track** (mục 3.3), export, rồi khoá lại với `RELOCK=1` |
 | `… đã khoá với file khác` | Bạn khoá lại với export khác | Ghi lý do vào `decision_log.csv`, rồi thêm `RELOCK=1` |
+| `Chưa xong vòng … — chạy make status` | Task trước chưa đủ lock, reference, compare hoặc 2 dòng log | Chạy `make status`, làm đúng bước được chỉ ra rồi khoá task tiếp theo |
 | `Chưa khoá … trước khi mở reference` | Chưa `make lock` task này | Khoá trước, `make reference` sau |
 | `file đã đổi sau khi khoá` | `submission/<task>/annotations.xml` bị sửa | Chạy lại `make lock` với đúng file export đã khoá |
 | `Chưa cài reference …` | Chưa chạy `make reference` cho task này | `make reference TASK=<task>` (task phải khoá trước) |
 | `! Core … không có trong export` | Thiếu ảnh core trong task | Kiểm bước 4 mục 2 (đã chọn đủ ảnh trong `core/` chưa), tạo lại task nếu thiếu |
+| `File của … và bài của bạn export từ cùng một task CVAT` | Hai file có cùng owner và lúc tạo task | Mỗi người tạo task CVAT riêng, tự vẽ và export lại |
+| `! … source khác manual` | Có shape import từ file mà chưa sửa trong CVAT | Lab yêu cầu vẽ tay; chỉ khi import lại export cũ của chính mình sau khi tạo lại task mới ghi lý do vào `decision_log.csv` |
+| `! … shape trùng từng đỉnh` | Hình học trùng với reference hoặc peer tới từng đỉnh | Kiểm tra hai người đã vẽ độc lập; nếu từng import reference/export cũ, ghi rõ trong `decision_log.csv` |
 
 Kẹt quá 3 phút ở một thao tác: gọi Lab Coach (hoặc hỏi bạn cùng nhóm), đừng tự tìm cách lách qua bước khoá. Xem
 thêm mục [Khi bị kẹt](README.md#khi-bị-kẹt) trong `README.md`.

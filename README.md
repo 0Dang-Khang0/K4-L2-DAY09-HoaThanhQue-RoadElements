@@ -12,12 +12,16 @@ nộp nằm trong `submission/`. Khi nào gọi Lab Coach: xem mục [Khi bị k
 
 Chọn một trong hai, làm suốt buổi:
 
+Mỗi người tạo **repo riêng từ template bằng tài khoản GitHub của mình**. Không dùng chung repo, không fork repo của
+trưởng nhóm; bài nộp được tính theo từng repo.
+
 - **Cá nhân**: không chạy `make team`. Mỗi mini-task bạn tự vẽ, tự khoá, tự so với reference, không có bước đổi bài
   với ai. Thời gian đáng lẽ dùng để so bài nhóm thì dùng cho stretch hoặc ghi log kỹ hơn.
 - **Nhóm 2–4 người**: chạy `make team MEMBERS="An, Bình"` (liệt kê đủ tên, cách nhau bằng dấu phẩy) trước phút 15.
-  Mỗi người trong nhóm **vẫn tự vẽ toàn bộ ảnh core của mình** — nhóm không chia nhau vẽ. Sau khi khoá, đổi mã khoá
-  và file `annotations.xml` với ít nhất một bạn cùng nhóm, chạy `make peer` để so hai bài, rồi thảo luận (mục "Vòng
-  lặp" bên dưới).
+  Mỗi người trong nhóm **vẫn tự vẽ toàn bộ ảnh core của mình** — nhóm không chia nhau vẽ. Trước khi khoá, chỉ hỏi
+  nhau thao tác công cụ; đừng chốt chung cách xử lý ca mơ hồ — để dành cho lúc so peer, không thì hai bài không còn
+  độc lập để so. Sau khi khoá, đổi mã khoá và file `annotations.xml` với ít nhất một bạn cùng nhóm, chạy `make peer`
+  để so hai bài, rồi thảo luận (mục "Vòng lặp" bên dưới).
 
 `make team` không có `MEMBERS=` sẽ in chế độ hiện tại (`Chế độ: cá nhân` hoặc `Chế độ: nhóm (An, Bình)`). Không có
 file `team.json` = cá nhân; file này nằm ở gốc repo, không nằm trong `submission/`, nên header của `qc_report.md`
@@ -47,6 +51,7 @@ thêm gì.
 | So bài với bạn cùng nhóm (nhóm) | `make peer TASK=lane FILE=<annotations.xml của bạn cùng nhóm> CODE=<mã khoá của họ> NAME=<tên họ>` | `python lab9.py peer lane --file … --code … --name …` |
 | Mở reference (sau khi đã khoá) | `make reference TASK=lane [FILE=<zip reference ngoài>]` | `python lab9.py reference lane [--file …]` |
 | So với reference | `make compare TASK=lane` | `python lab9.py compare lane` |
+| Xem tiến độ và bước tiếp theo | `make status` | `python lab9.py status` |
 | Kiểm đủ file nộp | `make check` | `python lab9.py check` |
 
 ## Trong thư mục
@@ -65,6 +70,9 @@ thêm gì.
 
 ## Vòng lặp của mỗi mini-task (4 lần, giống nhau)
 
+`make lock` của task tiếp theo bị từ chối cho tới khi task trước đã đủ: lock còn nguyên, `reference.txt`,
+`compare.md` và ít nhất 2 dòng trong `comparison_log.csv`. Chạy `make status` để xem đúng một bước tiếp theo.
+
 1. **Gắn nhãn** ảnh core theo card. Không nhìn bài bạn khác, không mở `refs/` hay `gt/`.
 2. **Self-QC** theo checklist trong card, sửa trước khi export.
 3. **Export** từ CVAT (định dạng ghi trong card) → `make lock TASK=… FILE=…`. Lệnh in ra **mã khoá** dạng
@@ -79,6 +87,7 @@ thêm gì.
    `submission/comparison_log.csv` và, nếu là ca mơ hồ, thêm một rule vào `submission/decision_log.csv`.
 7. Trả lời mục của task đó trong `submission/scale_100k.md`: nếu lỗi này lặp lại trên 100 000 frame thì model học
    sai gì. Trả lời câu debrief trong card (tự nghĩ nếu cá nhân, bàn nhanh nếu nhóm).
+8. **Commit và push `submission/` sau mỗi task** để có bản sao lưu và dấu tiến độ. Sau đó mới sang task kế tiếp.
 
 ## Honour rule: đừng mở trước khi khoá
 
@@ -91,6 +100,15 @@ Không có mã hoá nào ngăn bạn mở file này sớm; đây là luật danh
   `reopened_at`).
 - `make check` cảnh báo nếu bạn khoá lại **sau khi** đã mở reference — mở lại vẫn được, nhưng phải ghi lý do vào
   `decision_log.csv`.
+
+**Tool ghi lại gì:**
+
+- CVAT owner, task/job, lúc tạo task và lúc export;
+- nguồn shape (`manual`, `file` hoặc nguồn khác);
+- shape trùng từng đỉnh với reference hoặc bài peer;
+- tóm tắt các tín hiệu đó trong `make check`.
+
+Đây là tín hiệu để Lab Coach hỏi bạn về quy trình, không phải kết luận hay hình phạt tự động.
 
 Không tự mở `refs/` hay `gt/` bằng tay trước khi khoá, và không mở file khoá của người khác ngoài luồng
 `make peer`.
@@ -111,16 +129,18 @@ Không tự mở `refs/` hay `gt/` bằng tay trước khi khoá, và không m�
 
 ## Tự time-box
 
-Chậm hơn lịch 5 phút ở một task: bỏ phần stretch, khoá bài đang có, làm tiếp task sau. Lab Coach đi vòng theo mốc
-của lịch; được nhắc là đang chậm thì làm đúng như vậy.
+Chậm hơn lịch 5 phút ở một task: bỏ phần stretch, khoá bài đang có, chạy `make reference` + `make compare`, ghi 2
+dòng `comparison_log.csv` rồi làm tiếp task sau (`make status` chỉ đúng bước còn thiếu). Phần so và log chỉ mất vài
+phút nên không cắt. Lab Coach đi vòng theo mốc của lịch; được nhắc là đang chậm thì làm đúng như vậy.
 
 ## Khi bị kẹt
 
 1. Tra [GUIDE mục 5](GUIDE.md): bảng thông báo lỗi và cách xử lý.
 2. Vẫn kẹt sau 3 phút: giơ tay gọi Lab Coach (hoặc hỏi bạn cùng nhóm nếu nhanh hơn). Lab Coach gỡ kẹt về CVAT,
-   Docker, lệnh `make`/Python và git.
+   Docker, lệnh `make`/Python và git. Trong lúc chờ, vẽ tiếp ảnh khác, đừng ngồi đợi.
 3. Câu hỏi kiểu "vẽ thế này đúng chưa": Lab Coach chỉ bạn tới đoạn rule trong card hoặc handbook, nhưng **không xem
-   hộ bài trước khi bạn khoá** — lần thử đầu phải là của bạn. Ca mơ hồ thật thì ghi vào `decision_log.csv`.
+   hộ bài trước khi bạn khoá** — lần thử đầu phải là của bạn. Khi gọi, nói sẵn: ảnh nào, đoạn card nào, bạn đang
+   phân vân giữa hai cách hiểu nào. Ca mơ hồ thật thì ghi vào `decision_log.csv` rồi vẽ tiếp.
 
 Đừng tự tìm cách lách qua bước khoá.
 

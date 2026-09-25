@@ -5,7 +5,7 @@ CODE ?=
 NAME ?=
 MEMBERS ?=
 
-.PHONY: help lock reference peer team compare check cvat-status
+.PHONY: help lock reference peer team compare status check cvat-status
 
 help:
 	@echo "Day 9 Lab — lệnh học viên"
@@ -14,6 +14,7 @@ help:
 	@echo "  make peer TASK=lane FILE=annotations.xml CODE=XXXX-XXXX NAME=An"
 	@echo "  make team [MEMBERS=\"An, Bình\"]"
 	@echo "  make compare TASK=lane"
+	@echo "  make status"
 	@echo "  make check"
 	@echo "  make cvat-status   Kiểm CVAT đã cài ở Day 2/Day 8 đang chạy"
 
@@ -39,6 +40,9 @@ team:
 compare:
 	@test -n "$(TASK)" || { echo "✗ Thiếu TASK — ví dụ: make compare TASK=lane" >&2; exit 2; }
 	$(PYTHON) lab9.py compare $(TASK)
+
+status:
+	$(PYTHON) lab9.py status
 
 check:
 	$(PYTHON) lab9.py check
