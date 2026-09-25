@@ -18,7 +18,7 @@ bạn đã cài bản v2.76.0 trong thư mục `cvat` thì dùng bản đó cũn
    docker compose start
    ```
 
-3. Quay về thư mục repo lab, chạy `make cvat-status` (không có `make`: `python lab9.py cvat`). Lệnh in
+3. Quay về thư mục `mini-task/` của repo lab, chạy `make cvat-status` (không có `make`: `python lab9.py cvat`). Lệnh in
    `✓ CVAT <phiên bản> tại http://localhost:8080` là xong.
 4. Mở `http://localhost:8080`, đăng nhập bằng tài khoản CVAT bạn đã tạo từ Day 2. Quên mật khẩu: trong thư mục CVAT
    chạy `docker exec -it cvat_server bash -ic 'python3 ~/manage.py createsuperuser'` để tạo tài khoản mới.
@@ -36,7 +36,7 @@ sau. Không chạy `docker compose down -v` — tuỳ chọn `-v` có thể xoá
 
 1. Trang **Tasks** → nút **+** → **Create a new task**.
 2. **Name:** theo card, ví dụ `lane-<tên bạn>`.
-3. **Labels:** bấm tab **Raw**, xoá nội dung có sẵn, dán **toàn bộ** file `data/<task>/schema.json`, bấm **Done**.
+3. **Labels:** bấm tab **Raw**, xoá nội dung có sẵn, dán **toàn bộ** file `data/<task>/schema.json`, bấm **Save**.
    Chuyển sang tab **Constructor** để kiểm tra: lane và drivable có 2 label (label chính + `image_context`), sign và
    light có 1 label. CVAT tạo task thành công **không** có nghĩa label đúng — kiểm ở bước này.
 4. **Select files** → **My computer** → chọn **toàn bộ** ảnh trong `data/<task>/core/`. Không chọn ảnh `stretch/`.
@@ -102,7 +102,7 @@ Một đầu đèn = một track. Lỡ vẽ track thứ hai cho cùng đèn: xo�
 3. Chọn định dạng theo card: **CVAT for images 1.1** (lane, drivable, sign) hoặc **CVAT for video 1.1** (light).
    **Save images: tắt.**
 4. CVAT báo khi file sẵn sàng. Tải từ thông báo hoặc trang **Requests** trên thanh trên cùng.
-5. Trong terminal ở thư mục repo lab: `make lock TASK=<task> FILE=<đường dẫn file zip vừa tải>`.
+5. Trong terminal ở thư mục `mini-task/`: `make lock TASK=<task> FILE=<đường dẫn file zip vừa tải>`.
    Lệnh in ra **mã khoá** (dạng chữ và số ngắn). Làm nhóm thì ghi lại mã này, sẽ cần khi đổi bài với bạn cùng nhóm
    (xem README mục "Vòng lặp của mỗi mini-task").
 
@@ -112,7 +112,9 @@ Một đầu đèn = một track. Lỡ vẽ track thứ hai cho cùng đèn: xo�
 
 | Thông báo | Nghĩa | Làm gì |
 |---|---|---|
-| `CVAT chưa chạy ở http://localhost:8080` | Docker Desktop chưa mở, hoặc CVAT chưa bật | Mở Docker Desktop, trong thư mục CVAT (`cvat-day2` hoặc `cvat`) chạy `docker compose start` (báo không có container thì `docker compose up -d`), đợi CVAT khởi động xong, quay về thư mục repo lab rồi `make cvat-status` lại. Vẫn lỗi: trong thư mục CVAT chạy `docker compose ps` xem dịch vụ nào chưa chạy |
+| `CVAT chưa chạy ở http://localhost:8080` | Docker Desktop chưa mở, hoặc CVAT chưa bật | Mở Docker Desktop, trong thư mục CVAT (`cvat-day2` hoặc `cvat`) chạy `docker compose start` (báo không có container thì `docker compose up -d`), đợi CVAT khởi động xong, quay về thư mục `mini-task/` của repo lab rồi `make cvat-status` lại. Vẫn lỗi: trong thư mục CVAT chạy `docker compose ps` xem dịch vụ nào chưa chạy |
+| `make: command not found` / `'make' is not recognized` | Máy không có `make` (thường là Windows) | Dùng lệnh `python lab9.py …` ở cột phải bảng lệnh trong README |
+| `python: command not found` | Máy chỉ có `python3` hoặc `py` | Gõ `python3 lab9.py …` (macOS/Linux) hoặc `py lab9.py …` (Windows) |
 | `Export dùng label ngoài schema` | Label trong task khác `schema.json` | Sửa label trong CVAT (hoặc tạo lại task) rồi export lại |
 | `Không có shape nào trên mẫu core` | Export nhầm task, hoặc export trước khi lưu | Ctrl+S, kiểm tên task, export lại |
 | `traffic_light phải export bằng CVAT for video 1.1` | Chọn nhầm định dạng **CVAT for images** | Export lại đúng định dạng (mục 4 bước 3) rồi khoá. Chưa khoá nên không tính khoá lại |

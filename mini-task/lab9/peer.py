@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
+import hashlib
 from pathlib import Path
 import re
 from typing import List
 import unicodedata
 
 from . import LabError
-from .common import load_lab, require_intact_lock, require_task, sha256_file
+from .common import load_lab, require_intact_lock, require_task
 from .compare import Comparison, compare_locked_with, write_html_comparison
 from .cvat_xml import xml_bytes
 from .locking import lock_code
@@ -71,10 +72,11 @@ def run_peer(base: Path, task: str, source: Path, code: str, name: str) -> List[
     )
     if not source.is_file():
         raise LabError(f"Không thấy file {source}.")
-    digest = sha256_file(source)
+    # Mã khoá tính trên annotations.xml (như make lock), nên ZIP export vẫn khớp mã.
+    peer_data = xml_bytes(source)
+    digest = hashlib.sha256(peer_data).hexdigest()
     if _normalized_code(code) != _normalized_code(lock_code(digest)):
         raise LabError(f"Mã khoá không khớp file của {teammate} — xin lại đúng file đã khoá.")
-    peer_data = xml_bytes(source)
     own_data = locked_xml.read_bytes()
     peer_meta = export_meta(peer_data)
     own_meta = export_meta(own_data)
