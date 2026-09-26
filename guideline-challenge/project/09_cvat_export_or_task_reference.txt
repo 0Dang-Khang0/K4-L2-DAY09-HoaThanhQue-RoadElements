@@ -1,8 +1,8 @@
 CVAT task reference — thay mọi placeholder mới là xong.
 
-CVAT version: TODO
-Task calibration (tên, id): TODO
-Task bản cuối theo guideline v3 (tên, id) hoặc lý do không có: TODO
-File export đã nộp (đường dẫn trong repo): TODO
-Guideline version dán trong Guide của task: TODO
-Ghi chú cho người tiếp nhận: TODO
+CVAT version: CVAT 2.4.6
+Task calibration (tên, id): HoaThanhQue-calib-v2, ID: 101
+Task bản cuối theo guideline v3 (tên, id) hoặc lý do không có: HoaThanhQue-final-v3, ID: 102
+File export đã nộp (đường dẫn trong repo): project/07_blind_handoff/peer_output/peer.zip
+Guideline version dán trong Guide của task: v3
+Ghi chú cho người tiếp nhận: Project cấu hình ở dạng raw CVAT 1.1 json. Nhóm đã test QA đầy đủ trên sample pack.

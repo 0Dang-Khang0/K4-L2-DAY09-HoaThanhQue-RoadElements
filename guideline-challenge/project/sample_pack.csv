@@ -1,1 +1,16 @@
-sample_id,split,tags,reason
+sample_id,split,tags,reasonGTS18,example,normal,Ví dụ bình thường lề phải
+GTS01,example,normal,Hai bên trái phải có biển
+GTS15,example,negative,Look-alike cấm xe tải vượt
+GTS22,example,negative,Ảnh tối không có biển
+GTS04,calibration,small_far,Biển lề trái và phải đường cao tốc
+GTS06,calibration,ambiguity,Biển phụ thời gian
+GTS05,calibration,edge,Giao lộ biển bên kia đường
+GTS17,calibration,negative,Look-alike cấm đi vào
+GTS26,calibration,negative,Biển tam giác ở xa
+GTS12,calibration,negative,Biển ở xa không có
+GTS02,blind,normal,Cần test normal case
+GTS07,blind,edge,Góc khuất hoặc bị che
+GTS09,blind,edge,Biển nhỏ ở xa
+GTS11,blind,critical,Nhiều biển phụ
+GTS20,blind,ambiguity,Chạng vạng không rõ chữ
+

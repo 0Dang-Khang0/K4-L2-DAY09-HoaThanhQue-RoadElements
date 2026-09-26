@@ -1,1 +1,4 @@
 sample_id,item,values_by_annotator,diagnosis,action,rule_change
+GTS15,speed_limit_sign,tung=vẽ box; hung=không vẽ,guideline_gap,revise_rule,Thêm rule rõ biển hết cấm xe tải vượt không vẽ
+GTS05,applies_to_ego,tung=yes; hung=unknown,execution_error,coaching,
+GTS06,panel_type,tung=time; hung=multiple,data_ambiguity,add_example,Thêm ảnh ví dụ GTS06 có multiple

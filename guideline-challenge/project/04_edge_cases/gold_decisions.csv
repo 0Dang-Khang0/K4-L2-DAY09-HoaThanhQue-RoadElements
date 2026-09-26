@@ -1,1 +1,11 @@
 sample_id,decision_id,expected,severity,rationale
+GTS02,d1,label=speed_limit_sign x1,critical,Biển 50 lề phải rõ ràng
+GTS07,d1,applies_to_ego=unknown,major,Biển góc giao lộ
+GTS09,d1,geometry: box ôm sát viền biển xa,minor,Box nhỏ không ôm cột
+GTS11,d1,panel_type=multiple,major,Nhiều biển phụ dưới biển 30
+GTS20,d1,speed_value=unreadable,critical,Ảnh quá tối có biển nhưng không đọc được số
+GTS20,d2,needs_review=true,major,Bắt buộc true khi unreadable
+GTS02,d2,speed_value=50,critical,Số 50 trên mặt biển
+GTS07,d2,needs_review=true,major,Bắt buộc true khi unknown
+GTS11,d2,applies_to_ego=unknown,major,Biển phụ multiple có time và distance
+GTS11,d3,needs_review=true,major,Bắt buộc true khi unknown
