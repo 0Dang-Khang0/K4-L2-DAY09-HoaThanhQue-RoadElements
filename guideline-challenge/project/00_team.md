@@ -10,11 +10,11 @@
 
 | Thành viên | GitHub | Vai trò chính | File phụ trách |
 |---|---|---|---|
-| Nguyễn Công Thành| congthanh | spec owner | Guideline_v1, Slide | 
-| Lê Thanh Tùng| thanhtung | CVAT owner | gtsdb, guideline_v1 | 
-| Lưu Quang Hùng| quanghung | CVAT owner | gtsdb, guideline_v2 | 
-| Trần Đăng Khang| dangkhang | gold owner | gold_decisions.csv | 
-| Phan Tấn Đạt| tandat | QA owner | N/A | 
+| Nguyễn Công Thành|  thanhnc4325 | spec owner | Guideline_v1, Slide | 
+| Lê Thanh Tùng| Zeenutt  | CVAT owner | gtsdb, guideline_v1 | 
+| Lưu Quang Hùng| hungluuq | CVAT owner | gtsdb, guideline_v2 | 
+| Trần Đăng Khang| 0Dang-Khang0 | gold owner | gold_decisions.csv | 
+| Phan Tấn Đạt| datphan-cpu | QA owner | N/A | 
 
 Gợi ý chia vai (nhóm 2–3 người thì gộp): **spec owner** (`01`, `02`), **CVAT owner** (`03_*`, `sample_pack.csv`,
 `09`), **gold owner** (`04_edge_cases/`), **QA owner** (`05`, `06`, `07_blind_handoff/`). Mỗi file một người sửa
